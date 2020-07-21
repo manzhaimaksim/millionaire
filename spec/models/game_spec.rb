@@ -65,6 +65,7 @@ RSpec.describe Game, type: :model do
     it 'User takes 0 money if he has not answered any question' do
       game_w_questions.take_money!
       expect(game_w_questions.prize).to eq(0)
+      expect(game_w_questions.finished?).to be_truthy
     end
 
     # игрок забирает деньги, если ответил хотя бы на один вопрос
@@ -73,6 +74,7 @@ RSpec.describe Game, type: :model do
       game_w_questions.answer_current_question!(q.correct_answer_key)
       game_w_questions.take_money!
       expect(game_w_questions.prize).to eq(100)
+      expect(game_w_questions.finished?).to be_truthy
     end
   end
 end
