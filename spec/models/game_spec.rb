@@ -60,5 +60,19 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.status).to eq(:in_progress)
       expect(game_w_questions.finished?).to be_falsey
     end
+
+    # игрок забирет 0 денег, если не ответил ни на один вопрос
+    it 'User takes 0 money if he has not answered any question' do
+      game_w_questions.take_money!
+      expect(game_w_questions.prize).to eq(0)
+    end
+
+    # игрок забирает деньги, если ответил хотя бы на один вопрос
+    it 'User takes the money if he answered at least one question' do
+      q = game_w_questions.current_game_question
+      game_w_questions.answer_current_question!(q.correct_answer_key)
+      game_w_questions.take_money!
+      expect(game_w_questions.prize).to eq(100)
+    end
   end
 end
