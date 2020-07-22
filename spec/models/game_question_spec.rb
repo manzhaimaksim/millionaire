@@ -51,4 +51,15 @@ RSpec.describe GameQuestion, type: :model do
       expect(game_question.level).to eq(game_question.question.level)
     end
   end
+
+  context 'test correct_answer_key' do
+    it '.correct_answer_key' do
+      expect(game_question.correct_answer_key).to eq('b')
+    end
+
+    it 'fifty-fifty hint contains the correct answer' do
+      game_question.add_fifty_fifty
+      expect(game_question.help_hash[:fifty_fifty]).to include(game_question.correct_answer_key)
+    end
+  end
 end
