@@ -105,4 +105,24 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.status).to eq(:money)
     end
   end
+
+  context 'Current question and previous level' do
+    it '.current_game_question and .previous_level' do
+      # в самом начале игры предыдущий уровень равен -1
+      expect(game_w_questions.previous_level).to eq(-1)
+
+      # в самом начале игры первый вопрос является текущим
+      expect(game_w_questions.current_game_question).to eq(game_w_questions.game_questions[0])
+
+      # правильный ответ на первый вопрос, для перехода на новый уровень
+      q = game_w_questions.current_game_question
+      game_w_questions.answer_current_question!(q.correct_answer_key)
+
+      # предыдущий уровень становится равен 0
+      expect(game_w_questions.previous_level).to eq(0)
+
+      # если правильно дан ответ на вопрос, то второй вопрос становится текущим
+      expect(game_w_questions.current_game_question).to eq(game_w_questions.game_questions[1])
+    end
+  end
 end
