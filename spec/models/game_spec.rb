@@ -125,4 +125,51 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.current_game_question).to eq(game_w_questions.game_questions[1])
     end
   end
+
+  context 'answer_current_question!' do
+    it 'Correct answer' do
+      expect(game_w_questions.current_level).to eq(0)
+
+      q = game_w_questions.current_game_question
+      game_w_questions.answer_current_question!(q.correct_answer_key)
+
+      expect(game_w_questions.previous_game_question).to eq(q)
+      expect(game_w_questions.current_level).to eq(1)
+      expect(game_w_questions.status).to eq(:in_progress)
+    end
+
+    it 'Incorrect answer' do
+      expect(game_w_questions.current_level).to eq(0)
+      q = game_w_questions.current_game_question
+
+      # выбираем случайный вариант из неправильных ваирантов
+      hash_of_answers = q.variants.except(q.correct_answer_key)
+      answer = hash_of_answers[hash_of_answers.keys.sample]
+
+      game_w_questions.answer_current_question!(answer)
+      expect(game_w_questions.current_level).to eq(0)
+      expect(game_w_questions.status).to eq(:fail)
+    end
+
+    it 'Answer for last question' do
+      expect(game_w_questions.current_level).to eq(0)
+      q = game_w_questions.current_game_question
+      game_w_questions.current_level = Question::QUESTION_LEVELS.max
+      expect(game_w_questions.current_level).to eq(14)
+
+      game_w_questions.answer_current_question!(q.correct_answer_key)
+      expect(game_w_questions.current_level).to eq(15)
+      expect(game_w_questions.status).to eq(:won)
+      expect(game_w_questions.prize).to eq(1000000)
+    end
+
+    it 'Answered after time expires' do
+      expect(game_w_questions.current_level).to eq(0)
+      q = game_w_questions.current_game_question
+      game_w_questions.created_at = Time.now - 35.minutes
+      game_w_questions.time_out!
+      expect(game_w_questions.answer_current_question!(q.correct_answer_key)).to be_falsey
+      expect(game_w_questions.status).to eq(:timeout)
+    end
+  end
 end
