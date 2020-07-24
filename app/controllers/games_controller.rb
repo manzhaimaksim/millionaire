@@ -20,7 +20,7 @@ class GamesController < ApplicationController
     @game_question = @game.current_game_question
   end
 
-  # создаем новую игру и отправляем на экшен #show в случае успеха
+  # создаем новую игру и отправляем на экшен show в случае успеха
   def create
     begin
       # создаем игру для залогиненного юзера
