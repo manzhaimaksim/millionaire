@@ -102,6 +102,19 @@ RSpec.describe GamesController, type: :controller do
       expect(flash.empty?).to be_truthy # удачный ответ не заполняет flash
     end
 
+    it 'incorrect answer' do
+      question = game_w_questions.current_game_question
+
+      # выбираем случайный вариант из неправильных ваирантов
+      hash_of_answers = question.variants.except(question.correct_answer_key)
+      answer = hash_of_answers[hash_of_answers.keys.sample]
+
+      put :answer, id: game_w_questions.id, letter: answer
+      game = assigns(:game)
+      expect(game.status).to eq(:fail)
+      expect(game.finished?).to be_truthy
+    end
+
     # тест на отработку "помощи зала"
     it 'uses audience help' do
       # сперва проверяем что в подсказках текущего вопроса пусто
