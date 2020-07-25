@@ -91,5 +91,13 @@ RSpec.describe GamesController, type: :controller do
       expect(game.current_game_question.help_hash[:audience_help].keys).to contain_exactly('a', 'b', 'c', 'd')
       expect(response).to redirect_to(game_path(game))
     end
+
+    it 'the user cannot watch someone else is game' do
+      another_game = FactoryBot.create(:game_with_questions)
+      get :show, id: another_game.id
+      expect(response.status).not_to eq(200)
+      expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to be
+    end
   end
 end
