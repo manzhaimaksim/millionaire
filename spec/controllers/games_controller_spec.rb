@@ -107,7 +107,7 @@ RSpec.describe GamesController, type: :controller do
 
       # выбираем случайный вариант из неправильных ваирантов
       hash_of_answers = question.variants.except(question.correct_answer_key)
-      answer = hash_of_answers[hash_of_answers.keys.sample]
+      answer = hash_of_answers.keys.sample
 
       put :answer, id: game_w_questions.id, letter: answer
       game = assigns(:game)

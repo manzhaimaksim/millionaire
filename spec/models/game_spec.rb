@@ -150,7 +150,7 @@ RSpec.describe Game, type: :model do
 
       # выбираем случайный вариант из неправильных ваирантов
       hash_of_answers = q.variants.except(q.correct_answer_key)
-      answer = hash_of_answers[hash_of_answers.keys.sample]
+      answer = hash_of_answers.keys.sample
 
       game_w_questions.answer_current_question!(answer)
       expect(game_w_questions.current_level).to eq(0)
