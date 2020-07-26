@@ -50,6 +50,19 @@ RSpec.describe GameQuestion, type: :model do
       expect(game_question.text).to eq(game_question.question.text)
       expect(game_question.level).to eq(game_question.question.level)
     end
+
+    it 'correct .help_hash' do
+      expect(game_question.help_hash).to eq({})
+
+      game_question.help_hash[:some_key1] = 'some_value1'
+      game_question.help_hash[:some_key2] = 'some_value2'
+      game_question.help_hash[:some_key3] = 'some_value3'
+
+      expect(game_question.save).to be_truthy
+      gq = GameQuestion.find(game_question.id)
+
+      expect(gq.help_hash).to eq({ some_key1: 'some_value1', some_key2: 'some_value2', some_key3:'some_value3' })
+    end
   end
 
   context 'test correct_answer_key' do
