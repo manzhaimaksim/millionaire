@@ -63,6 +63,17 @@ RSpec.describe GameQuestion, type: :model do
 
       expect(gq.help_hash).to eq({ some_key1: 'some_value1', some_key2: 'some_value2', some_key3:'some_value3' })
     end
+
+    it 'using .fifty_fifty' do
+      expect(game_question.help_hash).to eq({})
+      game_question.add_fifty_fifty
+
+      # размер хеша с вариантами равен 2
+      expect(game_question.help_hash[:fifty_fifty].size).to eq(2)
+
+      # help_hash включает в себя подсказку 50/50
+      expect(game_question.help_hash).to include(:fifty_fifty)
+    end
   end
 
   context 'test correct_answer_key' do
