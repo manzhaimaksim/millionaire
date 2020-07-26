@@ -133,6 +133,26 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to redirect_to(game_path(game))
     end
 
+    it 'uses help .fifty_fifty' do
+      # сперва проверяем что в подсказках текущего вопроса пусто
+      expect(game_w_questions.current_game_question.help_hash[:fifty_fifty]).not_to be
+
+      # делаем запрос в контроллер с нужным типом пдсказки
+      put :help, id: game_w_questions.id, help_type: :fifty_fifty
+      game = assigns(:game)
+      expect(game.finished?).to be_falsey
+      expect(game.fifty_fifty_used).to be_truthy
+
+      # проверяем размер: массива с подсказки 50/50 равен 2
+      expect(game.current_game_question.help_hash[:fifty_fifty]).to be
+      expect(game.current_game_question.help_hash[:fifty_fifty].size).to eq(2)
+
+      # массив вариантов содержит правильный ответ
+      expect(game.current_game_question.help_hash[:fifty_fifty]).to include(game.current_game_question.correct_answer_key)
+
+      expect(response).to redirect_to(game_path(game))
+    end
+
     it 'the user cannot watch someone else is game' do
       another_game = FactoryBot.create(:game_with_questions)
       get :show, id: another_game.id
