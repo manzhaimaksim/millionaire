@@ -93,6 +93,25 @@ RSpec.describe GameQuestion, type: :model do
       # проверяем что строка содержит фразу, которая не меняется
       expect(fc).to include('считает, что это вариант')
     end
+
+    it 'using .add_friend_call' do
+      # хэш использованых подсказок не содержит подсказку звонок другу
+      expect(game_question.help_hash).not_to include(:friend_call)
+
+      # используем подсказку
+      game_question.add_friend_call
+
+      # help_hash теперь включает в себя подсказку звонок другу
+      expect(game_question.help_hash).to include(:friend_call)
+
+      fc = game_question.help_hash[:friend_call]
+
+      # т.к. вероятность правильного ответа 80%, то можно проверить что ответ явлется строкой
+      expect(fc).to be_a(String)
+
+      # проверяем что строка содержит фразу, которая не меняется
+      expect(fc).to include('считает, что это вариант')
+    end
   end
 
   context 'test correct_answer_key' do
