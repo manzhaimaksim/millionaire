@@ -5,10 +5,10 @@ RSpec.describe 'users/show', type: :view do
     before(:each) do
       current_user = FactoryBot.create(:user, name: 'Освальд')
       assign(:user, current_user)
-      assign(:games, [FactoryBot.build_stubbed(:game),
-                      FactoryBot.build_stubbed(:game),
-                      FactoryBot.build_stubbed(:game)
-      ])
+
+      build_stubbed_games = build_stubbed_list(:game, 3)
+      assign(:games, build_stubbed_games)
+
       sign_in current_user
       render
     end
