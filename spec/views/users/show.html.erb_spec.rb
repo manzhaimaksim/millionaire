@@ -5,11 +5,10 @@ RSpec.describe 'users/show', type: :view do
     before(:each) do
       current_user = FactoryBot.create(:user, name: 'Освальд')
       assign(:user, current_user)
-      assign(:games, [
-               FactoryBot.build_stubbed(:game, id: 15, created_at: Time.parse('2018.01.13, 13:00'), current_level: 4, prize: 500),
-               FactoryBot.build_stubbed(:game, id: 16, created_at: Time.parse('2019.02.14, 13:00'), current_level: 5, prize: 1000),
-               FactoryBot.build_stubbed(:game, id: 17, created_at: Time.parse('2020.03.15, 13:00'), current_level: 15, prize: 1000000)
-             ])
+      assign(:games, [FactoryBot.build_stubbed(:game),
+                      FactoryBot.build_stubbed(:game),
+                      FactoryBot.build_stubbed(:game)
+      ])
       sign_in current_user
       render
     end
@@ -26,9 +25,6 @@ RSpec.describe 'users/show', type: :view do
       stub_template 'users/_game.html.erb' => 'User game goes here'
       render
       expect(rendered).to have_content 'User game goes here'
-      expect(rendered).to match '500 ₽'
-      expect(rendered).to match '1 000 ₽'
-      expect(rendered).to match '1 000 000 ₽'
     end
   end
 
