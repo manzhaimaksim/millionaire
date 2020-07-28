@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'users/show', type: :view do
   context 'user views his page' do
     before(:each) do
-      current_user = FactoryBot.create(:user, name: 'Освальд')
+      current_user = create(:user, name: 'Освальд')
       assign(:user, current_user)
 
       build_stubbed_games = build_stubbed_list(:game, 3)
@@ -30,7 +30,7 @@ RSpec.describe 'users/show', type: :view do
 
   context 'not logged in user is viewing the page' do
     before(:each) do
-      assign(:user, FactoryBot.build_stubbed(:user, name: 'Освальд'))
+      assign(:user, build_stubbed(:user, name: 'Освальд'))
       render
     end
 

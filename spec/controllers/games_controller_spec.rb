@@ -11,11 +11,11 @@ require 'support/my_spec_helper' # наш собственный класс с �
 #
 RSpec.describe GamesController, type: :controller do
   # обычный пользователь
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
   # админ
-  let(:admin) { FactoryBot.create(:user, is_admin: true) }
+  let(:admin) { create(:user, is_admin: true) }
   # игра с прописанными игровыми вопросами
-  let(:game_w_questions) { FactoryBot.create(:game_with_questions, user: user) }
+  let(:game_w_questions) { create(:game_with_questions, user: user) }
 
   # группа тестов для незалогиненного юзера (Анонимус)
   context 'Anon' do
@@ -154,7 +154,7 @@ RSpec.describe GamesController, type: :controller do
     end
 
     it 'the user cannot watch someone else is game' do
-      another_game = FactoryBot.create(:game_with_questions)
+      another_game = create(:game_with_questions)
       get :show, id: another_game.id
       expect(response.status).not_to eq(200)
       expect(response).to redirect_to(root_path)

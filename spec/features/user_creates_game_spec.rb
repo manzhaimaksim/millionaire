@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.feature 'USER creates a game', type: :feature do
   # Чтобы пользователь мог начать игру, нам надо
   # создать пользователя
-  let(:user) { FactoryBot.create :user }
+  let(:user) { create :user }
 
   # и создать 15 вопросов с разными уровнями сложности
   # Обратите внимание, что текст вопроса и вариантов ответа нам

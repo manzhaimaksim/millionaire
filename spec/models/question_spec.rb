@@ -22,7 +22,7 @@ RSpec.describe Question, type: :model do
   end
 
   context 'validation uniqueness' do
-    subject { FactoryBot.create(:question)}
+    subject { create(:question)}
     it { should validate_uniqueness_of(:text) }
   end
 end
