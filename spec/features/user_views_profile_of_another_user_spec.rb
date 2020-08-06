@@ -14,7 +14,7 @@ RSpec.feature 'USER views profile of another user', type: :feature do
   end
 
   scenario 'User views profile of another user' do
-    visit "/"
+    visit '/'
     click_link 'Джон'
     expect(page).to have_current_path '/users/2'
 
@@ -37,6 +37,5 @@ RSpec.feature 'USER views profile of another user', type: :feature do
     expect(page).to have_content '29 июля, 13:00'
 
     expect(page).not_to have_content 'Сменить имя и пароль'
-    save_and_open_page
   end
 end

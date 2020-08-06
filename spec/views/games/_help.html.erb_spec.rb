@@ -38,6 +38,6 @@ RSpec.describe 'games/help', type: :view do
   # Метод, который рендерит фрагмент с соотв. объектами
 
   def render_partial(help_hash, game)
-    render partial: 'games/help', object: help_hash, locals: {game: game}
+    render partial: 'games/help', object: help_hash, locals: { game: game }
   end
 end
