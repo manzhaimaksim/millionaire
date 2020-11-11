@@ -2,12 +2,12 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
-# специальные "матчеры" - методы, удобные для тестирования валидаций
+# специальные 'матчеры' - методы, удобные для тестирования валидаций
 require 'shoulda/matchers'
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -64,5 +64,5 @@ RSpec.configure do |config|
 end
 
 # Это нужно, чтобы капибара искала стили и js в правильном месте
-Capybara.asset_host = "http://localhost:3000"
+Capybara.asset_host = 'http://localhost:3000'
 

@@ -115,7 +115,7 @@ RSpec.describe GamesController, type: :controller do
       expect(game.finished?).to be_truthy
     end
 
-    # тест на отработку "помощи зала"
+    # тест на отработку 'помощи зала'
     it 'uses audience help' do
       # сперва проверяем что в подсказках текущего вопроса пусто
       expect(game_w_questions.current_game_question.help_hash[:audience_help]).not_to be
